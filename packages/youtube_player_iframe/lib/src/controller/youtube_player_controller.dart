@@ -20,6 +20,7 @@ class YoutubePlayerController implements YoutubePlayerIFrameAPI {
   /// Creates [YoutubePlayerController].
   YoutubePlayerController({
     this.params = const YoutubePlayerParams(),
+    this.videoId = '',
   }) {
     registerYoutubePlayerIframeWeb();
     _eventHandler = YoutubePlayerEventHandler(this);
@@ -28,6 +29,7 @@ class YoutubePlayerController implements YoutubePlayerIFrameAPI {
 
   /// Defines player parameters for the youtube player.
   final YoutubePlayerParams params;
+  final String videoId;
 
   final Completer<WebViewController> _webViewControllerCompleter = Completer();
 
@@ -172,6 +174,7 @@ class YoutubePlayerController implements YoutubePlayerIFrameAPI {
     await controller.loadHtmlString(
       playerHtml
           .replaceFirst('<<playerVars>>', params.toJson())
+          .replaceFirst('<<videoId>>', videoId)
           .replaceFirst('<<platform>>', platform),
       baseUrl: baseUrl,
     );
