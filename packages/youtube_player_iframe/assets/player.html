@@ -10,28 +10,42 @@
         margin: 0;
         width: 100%;
         height: 100%;
-        background-color: transparent;
+        background-color: black;
       }
       html {
         width: 100%;
         height: 100%;
-        background-color: transparent;
+        background-color: black;
       }
 
       .embed-container iframe,
       .embed-container object,
-      .embed-container embed {
+      .embed-container embed,
+      #player {
         position: absolute;
         top: 0;
         left: 0;
         width: 100% !important;
         height: 100% !important;
-        background-color: transparent;
+        background-color: black;
+        z-index: 2;
+      }
+      .embed-container, #player {
+        background-color: black;
+      }
+
+      .embed-container:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 1;
+        background-color: black;
       }
     </style>
     <title>Youtube Player</title>
-
-    <script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>
   </head>
 
   <body>
@@ -40,6 +54,11 @@
     </div>
 
     <script type="text/javascript">
+      var tag = document.createElement("script");
+      tag.src = "https://www.youtube.com/iframe_api";
+      var firstScriptTag = document.getElementsByTagName("script")[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
       var platform = "<<platform>>";
       var player;
       function onYouTubeIframeAPIReady() {
